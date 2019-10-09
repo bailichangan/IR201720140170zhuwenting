@@ -42,8 +42,8 @@ Win10 + python3.7
        1、对输入的查询进行语义逻辑的识别，判断是什么样的布尔查询。
        在本次实验中，针对单个and、or、not（A and B、A or B、A not B）三种布尔查询进行了实现，并在此基础上对双层逻辑的如
        A and B and C、A or B or C、(A and B) or C、(A or B) and C的实现，并作为功能拓展实现了对一般输入语句进行的排序
-       查询，可以返回排序最靠前的若干个结果。
-       如下所示：(用查询的单词在该文档中出现的个数/总数作为简单的排序分数)
+       查询，可以返回排序最靠前的若干个结果。(用查询的单词在该文档中出现的个数/总数作为简单的排序分数)
+       如下所示：
    ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/1.9.png)  
    ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/1.10.png)
    
