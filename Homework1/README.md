@@ -41,6 +41,7 @@ Win10 + python3.7
        
 ### 三、实验结果展示
       1、A and B、A or B、A not B：
+      ![Image text](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/1.1.png)
       2、A and B and C、A or B or C、(A and B) or C、(A or B) and C：
       3、一般的语句查询：
 
