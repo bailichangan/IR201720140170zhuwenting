@@ -45,8 +45,10 @@ Win10 + python3.7
       2、A and B and C、A or B or C、(A and B) or C、(A or B) and C：
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/1.2.png)
       3、一般的语句查询：
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/1.3.png)
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/1.4.png)
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/1.3.png)  
+
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/1.4.png)  
+
 结论分析与体会
 ---------------
 
