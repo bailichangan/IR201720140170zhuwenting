@@ -40,6 +40,9 @@ Win10 + python3.7
        其中merge合并列表时采用同时遍历的方法，降低复杂度为O(x+y)，如下merge2_and所示：  
        
 ### 三、实验结果展示
+      1、A and B、A or B、A not B：
+      2、A and B and C、A or B or C、(A and B) or C、(A or B) and C：
+      3、一般的语句查询：
 
 结论分析与体会
 ---------------
