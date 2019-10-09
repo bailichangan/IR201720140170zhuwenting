@@ -23,13 +23,13 @@ Win10 + python3.7
 实验步骤
 ---------------
 ### 一、对推特数据的处理
-       1、 打开推特的文本数据发现数据具有较好的结构性，信息主要有userName、clusterNo、text、timeStr、tweetId、errorCode、
-       textCleaned、relevance这些部分的信息，除了下图红色标注的，对于我们的检索任务而言，其它信息都是冗余的，我们首先需要提取
-       出userName、text、tweetId三部分信息来建立inverted index的postings。 
+       1、 打开推特的文本数据发现数据具有较好的结构性，信息主要有userName、clusterNo、text、timeStr、tweetId、errorC
+       ode、textCleaned、relevance这些部分的信息，除了下图红色标注的，对于我们的检索任务而言，其它信息都是冗余的，我们
+       首先需要提取出userName、text、tweetId三部分信息来建立inverted index的postings。 
    ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/1.5.png)   
    
-       2、 按行读取每条tweet后调用tokenize_tweet方法对其进行处理,并进行分词后对单词的大写统一变小写、单复数和动词形式统一等处理
-       使用TextBlob工具包，处理后的推特如下所示：
+       2、 按行读取每条tweet后调用tokenize_tweet方法对其进行处理,并进行分词后对单词的大写统一变小写、单复数和动词形式统
+       一等处理。使用TextBlob工具包，处理后的推特如下所示：
    ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/1.6.png)   
        
        3、然后进行分词等处理后的推特如下：  
@@ -65,11 +65,11 @@ Win10 + python3.7
 
 结论分析与体会
 ---------------  
-构建inverted index首先需要将每篇文档转换成一个个词条的列表，然后进行语言学的预处理，产生归一化的词条作为词项，最后将所有文档
-按照其中出现的词项来建立inverted index。根据inverted index的模型可以完成布尔查询的基本要求，复杂的布尔查询也可以在基本的and
-、or、not逻辑基础实现上通过嵌套实现，最后通过用查询的单词在该文档中出现的个数/总数作为简单的排序检索，没有计算文档和查询的相似
-度，结果比较粗糙，需要进一步评估。在本次inverted index模型中没有考虑tf、idf和文档length等信息，还需要进一步完善来满足更高级的
-应用需求。另外，在查询时还可以通过组织查询的处理过程来使处理的工作量最小，达到优化查询的目的。
+构建inverted index首先需要将每篇文档转换成一个个词条的列表，然后进行语言学的预处理，产生归一化的词条作为词项，最后将所有文档按
+照其中出现的词项来建立inverted index。根据inverted index的模型可以完成布尔查询的基本要求，复杂的布尔查询也可以在基本的and、or
+、not逻辑基础实现上通过嵌套实现，最后通过用查询的单词在该文档中出现的个数/总数作为简单的排序检索，没有计算文档和查询的相似度，结
+果比较粗糙，需要进一步评估。在本次inverted index模型中没有考虑tf、idf和文档length等信息，还需要进一步完善来满足更高级的应用需求
+另外，在查询时还可以通过组织查询的处理过程来使处理的工作量最小，达到优化查询的目的。
 
 
        
