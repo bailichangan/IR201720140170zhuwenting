@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Spyder Editor
-This is a temporary script file.
-"""
+
 import re
 import sys
 from textblob import TextBlob
@@ -12,7 +9,7 @@ from collections import defaultdict
 uselessTerm = ["username", "text", "tweetid"]
 postings = defaultdict(dict)
 
-
+# 合并
 def merge2_and(term1, term2):
     global postings
     answer = []
@@ -181,9 +178,8 @@ def tokenize_tweet(document):
     d = document.rindex("errorcode")
     e = document.index("text")
     f = document.index("timestr") - 3
-    # 提取用户名、tweet内容和tweetid三部分主要信息
+    # 提取username、tweet内容和tweetid三部分主要信息
     document = document[c:d] + document[a:b] + document[e:f]
-    # print(document)
     terms = TextBlob(document).words.singularize()
 
     result = []
@@ -198,7 +194,7 @@ def tokenize_tweet(document):
 def get_postings():
     global postings
     f = open(r"C:\Users\43498\PycharmProjects\Homework1\tweets.txt")
-    lines = f.readlines()  # 读取全部内容
+    lines = f.readlines()  
 
     for line in lines:
         line = tokenize_tweet(line)
@@ -211,16 +207,14 @@ def get_postings():
                 postings[te].append(tweetid)
             else:
                 postings[te] = [tweetid]
-    # 按字典序对postings进行升序排序,但返回的是列表，失去了键值的信息
-    # postings = sorted(postings.items(),key = lambda asd:asd[0],reverse=False)
-    # print(postings)
+    
 
 
 def do_search():
     terms = token(input("Search query >> "))
     if terms == []:
         sys.exit()
-        # 搜索的结果答案
+        
 
     if len(terms) == 3:
         # A and B
@@ -235,7 +229,7 @@ def do_search():
         elif terms[1] == "not":
             answer = merge2_not(terms[0], terms[2])
             print(answer)
-        # 输入的三个词格式不对
+        # 输入的词格式不对
         else:
             print("input wrong!")
 
@@ -258,7 +252,7 @@ def do_search():
             print(answer)
         else:
             print("More format is not supported now!")
-    # 进行自然语言的排序查询，返回按相似度排序的最靠前的若干个结果
+    # 返回按相似度排序的最靠前的结果
     else:
         leng = len(terms)
         answer = do_rankSearch(terms)
