@@ -197,7 +197,7 @@ def tokenize_tweet(document):
 
 def get_postings():
     global postings
-    f = open(r"C:\Users\43498\PycharmProjects\IR\tweets.txt")
+    f = open(r"C:\Users\43498\PycharmProjects\Homework1\tweets.txt")
     lines = f.readlines()  # 读取全部内容
 
     for line in lines:
