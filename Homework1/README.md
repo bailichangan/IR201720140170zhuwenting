@@ -44,7 +44,12 @@ Win10 + python3.7
        A and B and C、A or B or C、(A and B) or C、(A or B) and C的实现，并作为功能拓展实现了对一般输入语句进行的排序
        查询，可以返回排序最靠前的若干个结果。
        如下所示：(用查询的单词在该文档中出现的个数/总数作为简单的排序分数)
-       其中merge合并列表时采用同时遍历的方法，降低复杂度为O(x+y)，如下merge2_and所示：  
+   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/1.9.png)  
+   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/1.10.png)
+   
+       其中merge合并列表时采用同时遍历的方法，我们对每个有序表都维护一个位置指针，并让两个指针同时在两个列表中后移，每一步
+       我们都比较两个位置所指向的两个文档id，如果两者一样，则将该id输出到结果表中，然后同时将两个指针后移一位.如果两个文档
+       id不同，则将较小的id所对应的指针后移，降低复杂度为O(x+y)。 
        
 ### 三、实验结果展示
       1、A and B、A or B、A not B：
@@ -59,8 +64,12 @@ Win10 + python3.7
    ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/1.4.png)  
 
 结论分析与体会
----------------
-
+---------------  
+构建inverted index首先需要将每篇文档转换成一个个词条的列表，然后进行语言学的预处理，产生归一化的词条作为词项，最后将所有文档
+按照其中出现的词项来建立inverted index。根据inverted index的模型可以完成布尔查询的基本要求，复杂的布尔查询也可以在基本的and
+、or、not逻辑基础实现上通过嵌套实现，最后通过用查询的单词在该文档中出现的个数/总数作为简单的排序检索，没有计算文档和查询的相似
+度，结果比较粗糙，需要进一步评估。在本次inverted index模型中没有考虑tf、idf和文档length等信息，还需要进一步完善来满足更高级的
+应用需求。另外，在查询时还可以通过组织查询的处理过程来使处理的工作量最小，达到优化查询的目的。
 
 
        
