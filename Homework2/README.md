@@ -45,7 +45,7 @@ Win10 + python3.7
          （2）为postings中的每个term添加含有该term的tweetid和对应的tf_wght_doc项，即[tweetid,tf_wght_doc]
               同时计算出现该term的文档数目。
        代码如下：
-   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-5.png)  
+   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-6.png)  
    
        postings输出结果如下：
    ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-4.png)  
