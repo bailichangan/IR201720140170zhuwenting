@@ -100,11 +100,7 @@ def get_postings():
         document_frequency[te]=math.log(cnt_line/document_frequency[te],10)   #idf
     for tw in cosine:
         cosine[tw]=math.sqrt(cosine[tw])    #权重的平方和开根号，余弦归一化的倒数
-        #print(postings[te])
-    # print(postings, file=mediate2)
-
-    # mediate1.close()
-    # mediate2.close()
+        
 
 
 
