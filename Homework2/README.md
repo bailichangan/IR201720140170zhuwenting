@@ -58,15 +58,8 @@ Win10 + python3.7
    
    ### 二、对查询的输入进行处理
          对查询进行和tweet同样的分词等处理，保持一致性
-         def token(doc):
-             doc = doc.lower()
-             terms = TextBlob(doc).words.singularize()
-             result = []
-             for word in terms:
-                 expected_str = Word(word)
-                 expected_str = expected_str.lemmatize("v")
-                 result.append(expected_str)
-             return result
+   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-10.png)   
+    
    ### 三、Use SMART notation: lnc.ltc
          本次实验采用lnc.ltc的权重计算机制，query采用了对数tf计算方法、idf权重因子，document采用了对数tf计算方法、没有
          采用idf因子（同时基于效率和效果的考虑）及余弦归一化方法，对于每个查询词项term，根据term的贡献依次反复更新score
