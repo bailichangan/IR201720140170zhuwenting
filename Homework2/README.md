@@ -57,7 +57,6 @@ Win10 + python3.7
    ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-4.png)  
    
    ### 二、对查询的输入进行处理
-         对查询进行和tweet同样的分词等处理，保持一致性
    ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-10.png)   
     
    ### 三、Use SMART notation: lnc.ltc
