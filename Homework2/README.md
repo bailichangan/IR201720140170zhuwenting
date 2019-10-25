@@ -22,7 +22,13 @@ Win10 + python3.7
       • 在posting list中存储term在每个doc中的TF with pairs (docID, tf)  
 ### • 选做
       • 支持所有的SMART Notations  
-      
+  
+### 1、向量相似度的基本算法
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/2-8.png)  
+
+### 2、不同tf-idf方法的SMART系统记号  
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/2-9.png)  
+
 实验步骤
 ---------------
 ### 一、对推特数据的处理
@@ -43,7 +49,7 @@ Win10 + python3.7
          （1）先逐行读取文本内容，用cnt_line计算文档总数，同时记录下每个term在该文档中出现的次数即tf_raw_doc，
               进而求取tf_wght_doc，再利用tf_wght_doc求该篇文档的权重平方和。 
          （2）为postings中的每个term添加含有该term的tweetid和对应的tf_wght_doc项，即[tweetid,tf_wght_doc]
-              同时计算出现该term的文档数目。
+              同时计算出现该term的文档数目即df,以便后面计算idf。
        代码如下：
    ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-6.png)  
    
@@ -62,25 +68,34 @@ Win10 + python3.7
                  result.append(expected_str)
              return result
    ### 三、Use SMART notation: lnc.ltc
-           本次实验采用lnc.ltc的权重计算机制，query采用了对数tf计算方法、idf权重因子，document采用了对数tf计算方法、没有
-           采用idf因子（同时基于效率和效果的考虑）及余弦归一化方法
-           代码实现如下：
-           def lnc_ltc(query):
-               unique_query = set(query)
-               for term in unique_query:
-                   tf_raw_query = query.count(term)
-                   tf_wght_query = 1 + math.log(tf_raw_query, 10)  # query的tf
-
-                   for te in postings[term]:
-                       tweetid = te[0]
-                       score[tweetid] += tf_wght_query * document_frequency[term] * te[1] / cosine[te[0]]
-           其中tf_wght_query是query的tf，document_frequency[term]是query的idf，两者相乘是query的权重，te[0]、te[1]对应于
-           postings中的[tweetid,tf_wght_doc]  
-           for te in document_frequency:
-               document_frequency[te]=math.log(cnt_line/document_frequency[te],10)   #idf
-           for tw in cosine:
-               cosine[tw]=math.sqrt(cosine[tw])    #权重的平方和开根号，余弦归一化的倒数
-        
+         本次实验采用lnc.ltc的权重计算机制，query采用了对数tf计算方法、idf权重因子，document采用了对数tf计算方法、没有
+         采用idf因子（同时基于效率和效果的考虑）及余弦归一化方法，对于每个查询词项term，根据term的贡献依次反复更新score
+         数组。具体代码实现如下：
+   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-5.png)   
+   
+         其中tf_wght_query是query的tf，document_frequency[term]是query的idf，两者相乘是query的权重，te[0]、te[1]对应
+         于postings中的[tweetid,tf_wght_doc]          
+                 
  ### 四、 查询，可以返回排序最靠前的10个结果
- 
-
+           先对query进行和tweet同样的分词等处理，再调用第三步的lnc_ltc函数计算所有文档的得分，用sort排序选出分数（相似度）
+           最高的K篇文档。
+   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-7.png)     
+     
+     
+ 结果展示
+---------------
+ input a query: like Ron Weasley birthday
+ ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-1.png) 
+ input a query: Boko Haram Kidnapped French tourists
+ ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-2.png) 
+ input a query: China Achebe death
+ ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-3.png) 
+  
+  
+  结论分析与体会
+  ---------------  
+  本次实验将每篇文档和一个文本查询分别表示成一个向量，希望在给定查询时能从文档集合中返回得分最高的K篇文档，与实验一不同的是
+  需要考虑文档和查询向量的相似度。如果使用向量相似度的基本算法计算权重时可能需要浮点数，这会造成空间的浪费，可以通过如下两步
+  来缓解空间浪费问题，第一步如果使用Inverted intex的话，则不必事先计算出idf的值，只需要将N/df存储在term对应的倒排记录表的
+  头部就已经足够，求query权重时再计算每个term的idf即可。第二步，在每个Postings中存储词项频率tf。此次实验我就采取了第二步为
+  postings中的每个term添加含有该term的tweetid和对应的tf_wght_doc项，即[tweetid,tf_wght_doc]。
