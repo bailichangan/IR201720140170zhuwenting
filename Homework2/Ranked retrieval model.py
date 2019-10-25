@@ -17,10 +17,10 @@ def lnc_ltc(query):
         for te in postings[term]:
             tweetid = te[0]
             score[tweetid] += tf_wght_query * document_frequency[term] * te[1] / cosine[te[0]]
-            #document_frequency[term]：idf_query  log N/df  te[1]  tf_wght_doc
+            #document_frequency[term]：idf_query  log N/df  te[1]：tf_wght_doc
             #cosine[te[0]] = math.sqrt(pow(tf_wght_doc, 2))
 
-
+            
 def rank_search():
     str = token(input("Search query >> "))
     lnc_ltc(str)
@@ -101,8 +101,6 @@ def get_postings():
     for tw in cosine:
         cosine[tw]=math.sqrt(cosine[tw])    #权重的平方和开根号，余弦归一化的倒数
         
-
-
 
 
 def main():
