@@ -23,11 +23,11 @@ Win10 + python3.7
 ### • 选做
       • 支持所有的SMART Notations  
   
-### 1、向量相似度的基本算法
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/2-8.png)  
-
-### 2、不同tf-idf方法的SMART系统记号  
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/2-9.png)  
+### 1、向量相似度的基本算法  
+   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-8.png) 
+   
+### 2、不同tf-idf方法的SMART系统记号   
+   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-9.png)  
 
 实验步骤
 ---------------
