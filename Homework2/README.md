@@ -77,11 +77,13 @@ Win10 + python3.7
      
  结果展示
 ---------------
- input a query: like Ron Weasley birthday
- ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-1.png) 
- input a query: Boko Haram Kidnapped French tourists
- ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-2.png) 
- input a query: China Achebe death
+### 一、input a query: like Ron Weasley birthday
+ ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-1.png)  
+ 
+### 二、input a query: Boko Haram Kidnapped French tourists
+ ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-2.png)   
+ 
+### 三、input a query: China Achebe death
  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework2-3.png) 
   
   
@@ -90,5 +92,8 @@ Win10 + python3.7
   本次实验将每篇文档和一个文本查询分别表示成一个向量，希望在给定查询时能从文档集合中返回得分最高的K篇文档，与实验一不同的是
   需要考虑文档和查询向量的相似度。如果使用向量相似度的基本算法计算权重时可能需要浮点数，这会造成空间的浪费，可以通过如下两步
   来缓解空间浪费问题，第一步如果使用Inverted intex的话，则不必事先计算出idf的值，只需要将N/df存储在term对应的倒排记录表的
-  头部就已经足够，求query权重时再计算每个term的idf即可。第二步，在每个Postings中存储词项频率tf。此次实验我就采取了第二步为
-  postings中的每个term添加含有该term的tweetid和对应的tf_wght_doc项，即[tweetid,tf_wght_doc]。
+  头部就已经足够，求query权重时再计算每个term的idf即可。第二步，在每个Postings中存储词项频率tf。此次实验我就采取了第二步，
+  构建postings时为postings中的每个term添加含有该term的tweetid和对应的tf_wght_doc项，即[tweetid,tf_wght_doc]。
+  此次实验采用lnc.ltc的权重计算机制，query采用了对数tf计算方法、idf权重因子，document采用了对数tf计算方法、没有采用idf因子
+ （同时基于效率和效果的考虑）及余弦归一化方法，对于每个查询词项term，根据term的贡献依次反复更新score数组。
+ 
