@@ -17,12 +17,14 @@ Win10 + python3.7
       • Normalized Discounted Cumulative Gain (NDCG)
   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-1.png)
 
-### Mean average precision(MAP)：  
+相关知识
+--------------- 
+### 一、Mean average precision(MAP)：  
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-4.png)  
 其中，N 表示相关文档总数，position(i) 表示第 i 个相关文档在检索结果列表中的位置。  
 MAP（Mean Average Precision）即多个查询的平均正确率（AP）的均值，从整体上反映模型的检索性能。    
    
-### Mean reciprocal rank (MRR) ：
+### 二、Mean reciprocal rank (MRR) ：
 1、RR（reciprocal rank）
 倒数排名，指检索结果中第一个相关文档的排名的倒数。
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-2.png)
@@ -31,7 +33,7 @@ MAP（Mean Average Precision）即多个查询的平均正确率（AP）的均�
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-3.png)
 ranki 表示第 i 个查询的第一个相关文档的排名。  
 
-### nDCG  
+### 三、nDCG  
 在MAP计算公式中，文档只有相关不相关两种，而在nDCG中，文档的相关度可以分多个等级进行打分。  
 1、Cumulative Gain(CG)：  
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-5.png)    
