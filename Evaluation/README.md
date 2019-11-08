@@ -27,10 +27,10 @@ MAP（Mean Average Precision）即多个查询的平均正确率（AP）的均�
 ### 二、Mean reciprocal rank (MRR) ：
 1、RR（reciprocal rank）
 倒数排名，指检索结果中第一个相关文档的排名的倒数。
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-2.png)
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-2.png)  
 2、MRR（mean reciprocal rank）
 多个查询的倒数排名的均值，公式如下：
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-3.png)
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-3.png)  
 ranki 表示第 i 个查询的第一个相关文档的排名。  
 
 ### 三、nDCG  
