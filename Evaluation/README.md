@@ -15,4 +15,4 @@ Win10 + python3.7
     • Mean Average Precision (MAP)
     • Mean Reciprocal Rank (MRR)
     • Normalized Discounted Cumulative Gain (NDCG)
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-1.png)
+  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-1.png)
