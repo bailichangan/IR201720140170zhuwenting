@@ -43,3 +43,19 @@ ranki 表示第 i 个查询的第一个相关文档的排名。
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-7.png)   
 4、Normalize DCG(nDCG)：  
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-8.png)   
+
+实验步骤
+--------------- 
+1、由qrels.txt和result.txt分别获得qrels_dict和test_dict
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-9.png)    
+
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-10.png)   
+
+2、MAP评价
+MAP在Precision@K的基础上进行，主要步骤为：
+     一、考虑每个相关docid在测试结果中的位置，K1,K2, … KR；
+     二、为K1,K2 , … KR计算Precision@K；
+     三、求这R个P@K的平均值AvgPrec，得到AP；
+     四、MAP即为多个查询的AP的均值；
+ 
+   
