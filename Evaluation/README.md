@@ -63,9 +63,7 @@ MAP在Precision@K的基础上进行，主要步骤为：
  可以得到MAP评价结果如下：  
  
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-12.png)   
-
 .......    
-
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-13.png) 
 
 3、MRR评价  
@@ -79,9 +77,7 @@ MRR相比其他两个较为简单，只需考虑第一个相关文档出现的�
 可以得到MRR评价结果如下：  
 
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-15.png)    
-
 .......    
-
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-16.png)  
 
 4、NDCG评价  
@@ -102,7 +98,5 @@ NDCG基于两个假设：
 可以得到NDCG评价结果如下：  
 
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-18.png)    
-
 .......   
-
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-19.png)   
