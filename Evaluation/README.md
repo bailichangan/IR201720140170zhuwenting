@@ -100,3 +100,9 @@ NDCG基于两个假设：
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-18.png)    
 .......   
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-19.png)   
+   
+结论分析与体会
+---------------   
+MAP可以在每个召回率水平上提供单指标结果，在众多指标中，MAP被证明具有非常好的区别性和稳定性。NDCG是针对非二值情况下的指标
+同指标P@K一样，基于前K个检索结果进行计算。NDCG相对于MAR和MRR指标公式更复杂，所以计算方式存在差异的可能性更大。除了C是进
+行累加没有什么争议以外，N、D、G三项计算都可能存在差别。
