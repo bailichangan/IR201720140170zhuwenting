@@ -52,10 +52,48 @@ ranki 表示第 i 个查询的第一个相关文档的排名。
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-10.png)   
 
 2、MAP评价
-MAP在Precision@K的基础上进行，主要步骤为：
-     一、考虑每个相关docid在测试结果中的位置，K1,K2, … KR；
+MAP在Precision@K的基础上进行，主要步骤为：  
+
+     一、考虑每个相关docid在测试结果中的位置，K1,K2, … KR；  
      二、为K1,K2 , … KR计算Precision@K；
      三、求这R个P@K的平均值AvgPrec，得到AP；
      四、MAP即为多个查询的AP的均值；
+ ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-11.png)   
  
-   
+ 可以得到MAP评价结果如下：
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-12.png)    
+.......
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-13.png) 
+
+3、MRR评价  
+MRR相比其他两个较为简单，只需考虑第一个相关文档出现的位置就可以，步骤为：  
+
+     一、考虑第一个相关文档的名次位置
+     二、计算排名分数为1/k，即RR
+     三、MRR即为RR的均值  
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-14.png)   
+
+可以得到MRR评价结果如下：
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-15.png)   
+.......  
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-16.png)  
+
+4、NDCG评价  
+NDCG基于两个假设：  
+
+      • 高度相关的文档比边缘相关的文档更加有用
+      • 文档的排名越低，对用户越无用  
+      
+具体步骤为：  
+
+    一、给每一个真实相关的doc，附一个gain
+    二、计算第n级的CG
+    三、做一个discount的log运算，意为对测试结果的排名做一个惩罚（高rel，但rank不够靠前也很拉低评分），得到DCG
+    四、标准化，得到IDCG,进而计算NDCG
+    五、对每个query的NDCG求均值，得到最后的NDCG
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-17.png)  
+
+可以得到NDCG评价结果如下：  
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-18.png)   
+....... 
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-19.png)   
