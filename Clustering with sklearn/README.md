@@ -48,8 +48,9 @@ digits手写数字数据集
 实验步骤
 --------------- 
 ### 一、 K-means聚类digits数据集  
-在sklearn官网中提供的K-means对digits的聚类的demo代码中运行出来的结果如下：（https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_digits.html）  
-     ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-7.png)    
+在sklearn官网中提供的K-means对digits的聚类的demo代码中运行出来的结果如下：（https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_digits.html）   
+
+   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-7.png)    
 从库sklearn.datasets中加载digits数据集，数据集的介绍见上面。数据集是分好label的，存在digits.target中，同时我们可
 以提取出数据集的样本数，每个样本的维度，分别存储在n_samples n_features中，输出这三个变量，可以得到：  
                               
@@ -80,7 +81,7 @@ digits手写数字数据集
 
 由此得到init=random，k-means++，pca下各个方式的score :  
 
-     ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-8.png)
+   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-8.png)
 
 ### 二、可视化聚类
 在上面步骤中k-means聚类和评估已经全部完成了，但是为了更好可视化输出，我们可以进行操作：使用pca降维至两维，再进行聚类   
@@ -97,21 +98,62 @@ digits手写数字数据集
      centroids = kmeans.cluster_centers_
 定义输出的变化范围和输出的效果：  
 
-    #窗口
-    plt.imshow(Z, interpolation='nearest',
-               extent=(xx.min(), xx.max(), yy.min(), yy.max()),
-               cmap=plt.cm.Paired,
-               aspect='auto', origin='lower')
-    #降维后的数据点
-    plt.plot(reduced_data[:, 0], reduced_data[:, 1], 'k.', markersize=2)
-    #聚类中心
-    plt.scatter(centroids[:, 0], centroids[:, 1],
-                marker='x', s=169, linewidths=3,
-                color='w', zorder=10)
+     #窗口
+     plt.imshow(Z, interpolation='nearest',
+                extent=(xx.min(), xx.max(), yy.min(), yy.max()),
+                cmap=plt.cm.Paired,
+                aspect='auto', origin='lower')
+     #降维后的数据点
+     plt.plot(reduced_data[:, 0], reduced_data[:, 1], 'k.', markersize=2)
+     #聚类中心
+     plt.scatter(centroids[:, 0], centroids[:, 1],
+                 marker='x', s=169, linewidths=3,
+                 color='w', zorder=10)
 
-### 三、对demo可视化效果的修改/另一种形式展示
+### 三、修改demo可视化效果
+聚类后的结果应该是不同类以不同的颜色来表明，所以在修改的时候我用不同颜色来表示不同的聚类点，最后再加上聚类中心，会有更加直观
+的结果：
 
+    plt.scatter(reduced_data[:, 0], reduced_data[:, 1],c=kmeans.labels_)  
+    
+   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-9.png) 
+ 
+ ### 四、使用不同的方法对digits数据集聚类
+有了前一部分的探索，使用其他的聚类方法处理起来就会相对轻松，下面我们分别来看这几种方法的聚类和评估结果：  
+#### AffinityPropagation
+使用AffinityPropagation的核心算法如下所示：  
 
+    af = AffinityPropagation().fit(reduced_data)
+    result = af.labels_
+按照demo模型形式，绘制出来的效果如下：
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-10.png) 
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-11.jpg) 
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-12.jpg) 
+
+#### MeanShift
+    bandwidth = estimate_bandwidth(reduced_data, quantile=0.1)#经过测试，在quantile=0.1的情况下得到的结果是最好的
+    bench_k_means(MeanShift(bandwidth=bandwidth, bin_seeding=True),name="MeanShift",data=data)
+    meanshift = MeanShift(bandwidth=bandwidth, bin_seeding=True).fit(reduced_data)
+使用demo的效果本身就很好，如下：
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-13.png) 
+
+#### SpectralClustering  
+    pca = PCA(n_components=n_digits).fit_transform(data)#要使用数据降维是因为高维情况在建图过程存在数据缺失
+    bench_k_means(SpectralClustering(n_clusters=10),name="spectralcluster",data=pca)
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-14.png) 
+这个聚类是没有聚类中心的。
+
+#### ward hierarchical clustering
+    ward = AgglomerativeClustering(n_clusters=10, linkage='ward')
+    ward.fit(data)
+其他的聚类情况可视化效果都类似，这里不再一一可视化。只给出评估指标：
+
+#### AgglomerativeClustering
+    clustering = AgglomerativeClustering().fit(data)
+    
+#### DBSCN
+    db = DBSCAN().fit(data)
+    result = db.labels_
 
 2、MAP评价
 MAP在Precision@K的基础上进行，主要步骤为：  
