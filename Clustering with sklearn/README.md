@@ -24,17 +24,17 @@ Win10 + python3.7
     – labels_true and labels_pred
         • >>> from sklearn import metrics
         • >>> labels_true = [0, 0, 0, 1, 1, 1]
-        • >>> labels_pred = [0, 0, 1, 1, 2, 2] 
-   – Normalized Mutual Information (NMI)
+        • >>> labels_pred = [0, 0, 1, 1, 2, 2]      
+    – Normalized Mutual Information (NMI)
         • >>> metrics.normalized_mutual_info_score(labels_true, labels_pred) 
-   – Homogeneity: each cluster contains only members of a single class
+    – Homogeneity: each cluster contains only members of a single class
         • >>> metrics.homogeneity_score(labels_true, labels_pred) 
-   – Completeness: all members of a given class are assigned to the same cluster
+    – Completeness: all members of a given class are assigned to the same cluster
         • >>> metrics.completeness_score(labels_true, labels_pred)
 
 digits手写数字数据集
 --------------- 
-实验要求采用digits数据集，我们先对这个数据集进行一个初步的了解：
+实验要求采用digits数据集，我们先对这个数据集进行一个初步的了解：  
 手写数字数据集包含1797个0-9的手写数字数据，每个数据由8 * 8 大小的矩阵构成，矩阵中值的范围是0-16，代表颜色的深度。
 我们先加载一下数据，了解一下数据的维度，并以图像的形式展示一些第一个数据：
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-4.png)  
