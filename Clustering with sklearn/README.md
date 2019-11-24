@@ -43,36 +43,75 @@ digits手写数字数据集
 (1797,)
 (1797, 8, 8)
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-5.png) 
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-6.png) 
-其中，N 表示相关文档总数，position(i) 表示第 i 个相关文档在检索结果列表中的位置。  
-MAP（Mean Average Precision）即多个查询的平均正确率（AP）的均值，从整体上反映模型的检索性能。    
-   
-### 二、Mean reciprocal rank (MRR) ：
-1、RR（reciprocal rank）
-倒数排名，指检索结果中第一个相关文档的排名的倒数。
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-2.png)  
-2、MRR（mean reciprocal rank）
-多个查询的倒数排名的均值，公式如下：
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-3.png)  
-ranki 表示第 i 个查询的第一个相关文档的排名。  
-
-### 三、nDCG  
-在MAP计算公式中，文档只有相关不相关两种，而在nDCG中，文档的相关度可以分多个等级进行打分。  
-1、Cumulative Gain(CG)：  
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-5.png)    
-2、Discounted cumulative gain(DCG)：  
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-6.png)  
-3、Ideal DCG(IDCG)：
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-7.png)   
-4、Normalize DCG(nDCG)：  
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-8.png)   
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-6.png)   
 
 实验步骤
 --------------- 
-1、由qrels.txt和result.txt分别获得qrels_dict和test_dict
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-9.png)    
+### 一、 K-means聚类digits数据集  
+在sklearn官网中提供的K-means对digits的聚类的demo代码中运行出来的结果如下：（https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_digits.html）  
+     ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-7.png)    
+从库sklearn.datasets中加载digits数据集，数据集的介绍见上面。数据集是分好label的，存在digits.target中，同时我们可
+以提取出数据集的样本数，每个样本的维度，分别存储在n_samples n_features中，输出这三个变量，可以得到：  
+                              
+      n_digits: 10     n_samples： 1797    n_features： 64  
+     
+对官网代码进行改动，使用不同的评分方法来计算score表示聚类后类别的准确性，下面再分别用三种k-means聚类的方式来调用
+这段评分代码，得到不同的score：  
 
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-10.png)   
+     def bench_k_means(estimator, name, data):
+         t0 = time()
+         estimator.fit(data)
+         print('%-9s\t%.2fs\t%.3f\t%.3f\t%.3f'
+               % (name, (time() - t0),
+                  #metrics.normalized_mutual_info_score(labels, estimator.labels_),
+                  metrics.v_measure_score(labels, estimator.labels_),
+                  metrics.homogeneity_score(labels, estimator.labels_),
+                  metrics.completeness_score(labels, estimator.labels_)))
+
+     #kmeans
+     bench_k_means(KMeans(init='k-means++', n_clusters=n_digits, n_init=10),name="k-means++", data=data)
+     bench_k_means(KMeans(init='random', n_clusters=n_digits, n_init=10),name="random", data=data)
+     # in this case the seeding of the centers is deterministic, hence we run the
+     # kmeans algorithm only once with n_init=1
+     pca = PCA(n_components=n_digits).fit(data)
+     bench_k_means(KMeans(init=pca.components_, n_clusters=n_digits, n_init=1),name="PCA-based",data=data)
+
+其中K-means函数参数详解见链接：https://blog.csdn.net/weixin_44707922/article/details/91954734
+
+由此得到init=random，k-means++，pca下各个方式的score :  
+
+     ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-8.png)
+
+### 二、可视化聚类
+在上面步骤中k-means聚类和评估已经全部完成了，但是为了更好可视化输出，我们可以进行操作：使用pca降维至两维，再进行聚类   
+理由：  
+     1.散点图中的数据点是两位的  
+     2.在2维的基础上再次k-means聚类是因为已经聚类高维数据映射到二维空间的prelabel可能分散不过集中，影响可视化效果。  
+    
+     reduced_data = PCA(n_components=2).fit_transform(data)
+     kmeans = KMeans(init='k-means++', n_clusters=n_digits, n_init=10)
+     kmeans.fit(reduced_data)  # 对降维后的数据进行kmeans
+     result = kmeans.labels_
+得到各个类的中心点：  
+
+     centroids = kmeans.cluster_centers_
+定义输出的变化范围和输出的效果：  
+
+    #窗口
+    plt.imshow(Z, interpolation='nearest',
+               extent=(xx.min(), xx.max(), yy.min(), yy.max()),
+               cmap=plt.cm.Paired,
+               aspect='auto', origin='lower')
+    #降维后的数据点
+    plt.plot(reduced_data[:, 0], reduced_data[:, 1], 'k.', markersize=2)
+    #聚类中心
+    plt.scatter(centroids[:, 0], centroids[:, 1],
+                marker='x', s=169, linewidths=3,
+                color='w', zorder=10)
+
+### 三、对demo可视化效果的修改/另一种形式展示
+
+
 
 2、MAP评价
 MAP在Precision@K的基础上进行，主要步骤为：  
