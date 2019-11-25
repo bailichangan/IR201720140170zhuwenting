@@ -36,14 +36,18 @@ digits手写数字数据集
 --------------- 
 实验要求采用digits数据集，我们先对这个数据集进行一个初步的了解：  
 手写数字数据集包含1797个0-9的手写数字数据，每个数据由8 * 8 大小的矩阵构成，矩阵中值的范围是0-16，代表颜色的深度。
-我们先加载一下数据，了解一下数据的维度，并以图像的形式展示一些第一个数据：
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-4.png)  
+我们先加载一下数据，了解一下数据的维度，并以图像的形式展示一些第一个数据：  
+
+  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-4.png)   
+
 可以看到数据维度和第一张手写数字：
 (1797, 64)
 (1797,)
-(1797, 8, 8)
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-5.png) 
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-6.png)   
+(1797, 8, 8)  
+
+  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-5.png)   
+
+  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-6.png)   
 
 实验步骤
 --------------- 
@@ -114,9 +118,9 @@ digits手写数字数据集
 聚类后的结果应该是不同类以不同的颜色来表明，所以在修改的时候我用不同颜色来表示不同的聚类点，最后再加上聚类中心，会有更加直观
 的结果：
 
-    plt.scatter(reduced_data[:, 0], reduced_data[:, 1],c=kmeans.labels_)  
+    plt.scatter(reduced_data[:, 0], reduced_data[:, 1],c=kmeans.labels_)    
     
-   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-9.png) 
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-9.png) 
  
  ### 四、使用不同的方法对digits数据集聚类
 有了前一部分的探索，使用其他的聚类方法处理起来就会相对轻松，下面我们分别来看这几种方法的聚类和评估结果：  
@@ -126,8 +130,10 @@ digits手写数字数据集
     af = AffinityPropagation().fit(reduced_data)
     result = af.labels_
 按照demo模型形式，绘制出来的效果如下：
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-10.png) 
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-10.png)   
+
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-11.jpg) 
+
 修改可视化效果后如下：
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-12.jpg) 
 
@@ -140,14 +146,19 @@ digits手写数字数据集
 与 K-means 聚类不同的是，Mean-Shift 不需要选择聚类的数量，因为mean-shift 自动发现它。这是一个很大的优点。事实上聚类中心
 向着有最大密度的点收敛也是我们非常想要的，因为这很容易理解并且很适合于自然的数据驱动的场景。缺点是滑窗尺寸/半径“r“的选择需
 要仔细考虑。
+
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-16.gif) 
+
 下图展示了所有滑动窗口从端到端的整个过程。每个黑色的点都代表滑窗的质心，每个灰色的点都是数据点。
+
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-17.gif) 
 
 #### SpectralClustering  
     pca = PCA(n_components=n_digits).fit_transform(data)#要使用数据降维是因为高维情况在建图过程存在数据缺失
     bench_k_means(SpectralClustering(n_clusters=10),name="spectralcluster",data=pca)
+    
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-14.png) 
+
 这个聚类是没有聚类中心的。
 
 #### ward hierarchical clustering
