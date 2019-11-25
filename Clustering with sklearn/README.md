@@ -128,6 +128,7 @@ digits手写数字数据集
 按照demo模型形式，绘制出来的效果如下：
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-10.png) 
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-11.jpg) 
+修改可视化效果后如下：
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-12.jpg) 
 
 #### MeanShift
@@ -136,6 +137,12 @@ digits手写数字数据集
     meanshift = MeanShift(bandwidth=bandwidth, bin_seeding=True).fit(reduced_data)
 使用demo的效果本身就很好，如下：
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-13.png) 
+与 K-means 聚类不同的是，Mean-Shift 不需要选择聚类的数量，因为mean-shift 自动发现它。这是一个很大的优点。事实上聚类中心
+向着有最大密度的点收敛也是我们非常想要的，因为这很容易理解并且很适合于自然的数据驱动的场景。缺点是滑窗尺寸/半径“r“的选择需
+要仔细考虑。
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-16.gif) 
+下图展示了所有滑动窗口从端到端的整个过程。每个黑色的点都代表滑窗的质心，每个灰色的点都是数据点。
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-17.gif) 
 
 #### SpectralClustering  
     pca = PCA(n_components=n_digits).fit_transform(data)#要使用数据降维是因为高维情况在建图过程存在数据缺失
@@ -146,7 +153,7 @@ digits手写数字数据集
 #### ward hierarchical clustering
     ward = AgglomerativeClustering(n_clusters=10, linkage='ward')
     ward.fit(data)
-其他的聚类情况可视化效果都类似，这里不再一一可视化。只给出评估指标：
+其他的聚类方法可视化效果都类似，这里不再一一可视化。
 
 #### AgglomerativeClustering
     clustering = AgglomerativeClustering().fit(data)
@@ -154,59 +161,21 @@ digits手写数字数据集
 #### DBSCN
     db = DBSCAN().fit(data)
     result = db.labels_
-
-2、MAP评价
-MAP在Precision@K的基础上进行，主要步骤为：  
-
-     一、考虑每个相关docid在测试结果中的位置，K1,K2, … KR；  
-     二、为K1,K2 , … KR计算Precision@K；
-     三、求这R个P@K的平均值AvgPrec，得到AP；
-     四、MAP即为多个查询的AP的均值；
- ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-11.png)   
+  
+ ### 五、不同聚类方法的指标对比：
  
- 可以得到MAP评价结果如下：  
- 
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-12.png)   
-.......    
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-13.png) 
-
-3、MRR评价  
-MRR相比其他两个较为简单，只需考虑第一个相关文档出现的位置就可以，步骤为：  
-
-     一、考虑第一个相关文档的名次位置
-     二、计算排名分数为1/k，即RR
-     三、MRR即为RR的均值  
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-14.png)   
-
-可以得到MRR评价结果如下：  
-
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-15.png)    
-.......    
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-16.png)  
-
-4、NDCG评价  
-NDCG基于两个假设：  
-
-      • 高度相关的文档比边缘相关的文档更加有用
-      • 文档的排名越低，对用户越无用  
-      
-具体步骤为：  
-
-    一、给每一个真实相关的doc，附一个gain
-    二、计算第n级的CG
-    三、做一个discount的log运算，意为对测试结果的排名做一个惩罚（高rel，但rank不够靠前也很拉低评分），得到DCG
-    四、标准化，得到IDCG,进而计算NDCG
-    五、对每个query的NDCG求均值，得到最后的NDCG
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-17.png)  
-
-可以得到NDCG评价结果如下：  
-
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-18.png)    
-.......   
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework3-19.png)   
+init		time	nmi	homo	compl
+k-means++	0.60s	0.625	0.602	0.650
+random   	0.26s	0.689	0.669	0.710
+PCA-based	0.06s	0.680	0.667	0.695
+AffinityPropagation	6.43s	0.616	0.932	0.460
+MeanShift	0.51s	0.008	0.004	0.212
+ward hierarchical clustering	0.51s	0.796	0.758	0.836
+AgglomerativeClustering	0.20s	0.378	0.239	0.908
+DBSCAN() 	0.62s	0.000	0.000	1.000
    
 结论分析与体会
 ---------------   
-MAP可以在每个召回率水平上提供单指标结果，在众多指标中，MAP被证明具有非常好的区别性和稳定性。NDCG是针对非二值情况下的指标
-同指标P@K一样，基于前K个检索结果进行计算。NDCG相对于MAR和MRR指标公式更复杂，所以计算方式存在差异的可能性更大。除了C是进
-行累加没有什么争议以外，N、D、G三项计算都可能存在差别。
+对比这几种方法，感觉k-means算法相对较好，尽管在种子选点的方式上存在随机性，对异常偏离值不太敏感，但这个算法的逻辑和原理，对
+聚类的测定和迭代方法使它成为最经典，也是首选的聚类方法，在各个评价指标上都有一个相对较好的结果，而且速度比较快，计算量少。其
+他方法各有优劣，如AP和sc的时间复杂性较高，存在准确度上有较大的偏差，无法求得聚类中心等问题。
