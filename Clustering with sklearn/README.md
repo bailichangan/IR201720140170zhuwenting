@@ -50,14 +50,14 @@ digits手写数字数据集
 (1797, 64)
 (1797,)
 (1797, 8, 8)  
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-5.png)     
+  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-5.png)     
 
 实验步骤
 --------------- 
 ### 一、 K-means方法聚类digits数据集  
 在sklearn官网中提供的K-means对digits的聚类的demo代码中运行出来的结果如下：（https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_digits.html）   
 
-   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-7.png)    
+  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-7.png)    
 从库sklearn.datasets中加载digits数据集，数据集的介绍见上面。数据集是分好label的，存在digits.target中，同时我们可
 以提取出数据集的样本数，每个样本的维度，分别存储在n_samples n_features中，输出这三个变量，可以得到：  
                               
@@ -87,7 +87,7 @@ digits手写数字数据集
 其中K-means函数参数详解见链接：https://blog.csdn.net/weixin_44707922/article/details/91954734
 
 由此得到init=random，k-means++，pca下各个方法的score :  
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-8.png)
+  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-8.png)
 
 ### 二、可视化聚类结果
 在上面步骤中k-means聚类和评估已经全部完成了，但是为了更好可视化输出，我们可以进行操作：使用pca降维至两维，再进行聚类   
@@ -122,7 +122,7 @@ digits手写数字数据集
 
     plt.scatter(reduced_data[:, 0], reduced_data[:, 1],c=kmeans.labels_)    
     
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-9.png) 
+  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-9.png) 
  
  ### 四、使用不同的方法对digits数据集聚类
 有了前一部分的探索，使用其他的聚类方法处理起来就会相对轻松，下面我们分别来看这几种方法的聚类和评估结果：（几种聚类方法详解见
@@ -133,27 +133,27 @@ digits手写数字数据集
     af = AffinityPropagation().fit(reduced_data)
     result = af.labels_
 按照demo模型形式，绘制出来的效果如下：
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-10.png)   
+  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-10.png)   
 
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-11.jpg) 
+  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-11.jpg) 
 
 修改可视化效果后如下：
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-12.jpg) 
+  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-12.jpg) 
 
 #### 2、MeanShift
     bandwidth = estimate_bandwidth(reduced_data, quantile=0.1)#经过测试，在quantile=0.1的情况下得到的结果是最好的
     bench_k_means(MeanShift(bandwidth=bandwidth, bin_seeding=True),name="MeanShift",data=data)
     meanshift = MeanShift(bandwidth=bandwidth, bin_seeding=True).fit(reduced_data)
 使用demo的效果本身就很好，如下：
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-6.png) 
+  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-6.png) 
  
 与 K-means 聚类不同的是，Mean-Shift 不需要选择聚类的数量，因为mean-shift 自动发现它。这是一个很大的优点。事实上聚类中心
 向着有最大密度的点收敛也是我们非常想要的，因为这很容易理解并且很适合于自然的数据驱动的场景。缺点是滑窗尺寸/半径“r“的选择需
 要仔细考虑。
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-16.gif) 
+  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-16.gif) 
 
  下图展示了所有滑动窗口从端到端的整个过程。每个黑色的点都代表滑窗的质心，每个灰色的点都是数据点。
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-17.gif) 
+  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-17.gif) 
 
 #### 3、SpectralClustering  
     pca = PCA(n_components=n_digits).fit_transform(data)#要使用数据降维是因为高维情况在建图过程存在数据缺失
