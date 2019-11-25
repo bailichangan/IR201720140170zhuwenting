@@ -54,7 +54,7 @@ digits手写数字数据集
 
 实验步骤
 --------------- 
-### 一、 K-means聚类digits数据集  
+### 一、 K-means方法聚类digits数据集  
 在sklearn官网中提供的K-means对digits的聚类的demo代码中运行出来的结果如下：（https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_digits.html）   
 
    ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-7.png)    
@@ -86,7 +86,7 @@ digits手写数字数据集
 
 其中K-means函数参数详解见链接：https://blog.csdn.net/weixin_44707922/article/details/91954734
 
-由此得到init=random，k-means++，pca下各个方式的score :  
+由此得到init=random，k-means++，pca下各个方法的score :  
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-8.png)
 
 ### 二、可视化聚类结果
