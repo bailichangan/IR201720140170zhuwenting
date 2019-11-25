@@ -38,16 +38,19 @@ digits手写数字数据集
 手写数字数据集包含1797个0-9的手写数字数据，每个数据由8 * 8 大小的矩阵构成，矩阵中值的范围是0-16，代表颜色的深度。
 我们先加载一下数据，了解一下数据的维度，并以图像的形式展示一些第一个数据：  
 
-  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-4.png)   
-
+    import matplotlib.pyplot as plt
+    from sklearn.datasets import load_digits
+    digits = load_digits()
+    print(digits.data.shape)
+    print(digits.target.shape)
+    print(digits.images.shape)
+    plt.matshow(digits.images[0])
+    plt.show()
 可以看到数据维度和第一张手写数字：
 (1797, 64)
 (1797,)
 (1797, 8, 8)  
-
-  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-5.png)   
-
-  ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-6.png)   
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-5.png)     
 
 实验步骤
 --------------- 
@@ -84,10 +87,9 @@ digits手写数字数据集
 其中K-means函数参数详解见链接：https://blog.csdn.net/weixin_44707922/article/details/91954734
 
 由此得到init=random，k-means++，pca下各个方式的score :  
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-8.png)
 
-   ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-8.png)
-
-### 二、可视化聚类
+### 二、可视化聚类结果
 在上面步骤中k-means聚类和评估已经全部完成了，但是为了更好可视化输出，我们可以进行操作：使用pca降维至两维，再进行聚类   
 理由：  
      1.散点图中的数据点是两位的  
@@ -98,7 +100,7 @@ digits手写数字数据集
      kmeans.fit(reduced_data)  # 对降维后的数据进行kmeans
      result = kmeans.labels_
 得到各个类的中心点：  
-
+     
      centroids = kmeans.cluster_centers_
 定义输出的变化范围和输出的效果：  
 
@@ -124,7 +126,7 @@ digits手写数字数据集
  
  ### 四、使用不同的方法对digits数据集聚类
 有了前一部分的探索，使用其他的聚类方法处理起来就会相对轻松，下面我们分别来看这几种方法的聚类和评估结果：  
-#### AffinityPropagation
+#### 1、AffinityPropagation
 使用AffinityPropagation的核心算法如下所示：  
 
     af = AffinityPropagation().fit(reduced_data)
@@ -137,53 +139,51 @@ digits手写数字数据集
 修改可视化效果后如下：
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-12.jpg) 
 
-#### MeanShift
+#### 2、MeanShift
     bandwidth = estimate_bandwidth(reduced_data, quantile=0.1)#经过测试，在quantile=0.1的情况下得到的结果是最好的
     bench_k_means(MeanShift(bandwidth=bandwidth, bin_seeding=True),name="MeanShift",data=data)
     meanshift = MeanShift(bandwidth=bandwidth, bin_seeding=True).fit(reduced_data)
 使用demo的效果本身就很好，如下：
-![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-13.png) 
+![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-6.png) 
+ 
 与 K-means 聚类不同的是，Mean-Shift 不需要选择聚类的数量，因为mean-shift 自动发现它。这是一个很大的优点。事实上聚类中心
 向着有最大密度的点收敛也是我们非常想要的，因为这很容易理解并且很适合于自然的数据驱动的场景。缺点是滑窗尺寸/半径“r“的选择需
 要仔细考虑。
-
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-16.gif) 
 
-下图展示了所有滑动窗口从端到端的整个过程。每个黑色的点都代表滑窗的质心，每个灰色的点都是数据点。
-
+ 下图展示了所有滑动窗口从端到端的整个过程。每个黑色的点都代表滑窗的质心，每个灰色的点都是数据点。
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-17.gif) 
 
-#### SpectralClustering  
+#### 3、SpectralClustering  
     pca = PCA(n_components=n_digits).fit_transform(data)#要使用数据降维是因为高维情况在建图过程存在数据缺失
     bench_k_means(SpectralClustering(n_clusters=10),name="spectralcluster",data=pca)
     
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-14.png) 
-
 这个聚类是没有聚类中心的。
 
-#### ward hierarchical clustering
+#### 4、ward hierarchical clustering
     ward = AgglomerativeClustering(n_clusters=10, linkage='ward')
     ward.fit(data)
 其他的聚类方法可视化效果都类似，这里不再一一可视化。
 
-#### AgglomerativeClustering
+#### 5、AgglomerativeClustering
     clustering = AgglomerativeClustering().fit(data)
     
-#### DBSCN
+#### 6、DBSCN
     db = DBSCAN().fit(data)
     result = db.labels_
   
  ### 五、不同聚类方法的指标对比：
  
-init		time	nmi	homo	compl
-k-means++	0.60s	0.625	0.602	0.650
-random   	0.26s	0.689	0.669	0.710
-PCA-based	0.06s	0.680	0.667	0.695
-AffinityPropagation	6.43s	0.616	0.932	0.460
-MeanShift	0.51s	0.008	0.004	0.212
-ward hierarchical clustering	0.51s	0.796	0.758	0.836
-AgglomerativeClustering	0.20s	0.378	0.239	0.908
-DBSCAN() 	0.62s	0.000	0.000	1.000
+    init		time	nmi	homo	compl
+    k-means++	0.60s	0.625	0.602	0.650
+    random   	0.26s	0.689	0.669	0.710
+    PCA-based	0.06s	0.680	0.667	0.695
+    AffinityPropagation	6.43s	0.616	0.932	0.460
+    MeanShift	0.51s	0.008	0.004	0.212
+    ward hierarchical clustering	0.51s	0.796	0.758	0.836
+    AgglomerativeClustering	0.20s	0.378	0.239	0.908
+    DBSCAN() 	0.62s	0.000	0.000	1.000
    
 结论分析与体会
 ---------------   
