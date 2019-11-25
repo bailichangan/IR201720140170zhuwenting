@@ -125,7 +125,8 @@ digits手写数字数据集
 ![image](https://github.com/bailichangan/IR201720140170zhuwenting/blob/master/img-folder/Homework4-9.png) 
  
  ### 四、使用不同的方法对digits数据集聚类
-有了前一部分的探索，使用其他的聚类方法处理起来就会相对轻松，下面我们分别来看这几种方法的聚类和评估结果：  
+有了前一部分的探索，使用其他的聚类方法处理起来就会相对轻松，下面我们分别来看这几种方法的聚类和评估结果：（几种聚类方法详解见
+链接：https://blog.csdn.net/u011511601/article/details/81951939）
 #### 1、AffinityPropagation
 使用AffinityPropagation的核心算法如下所示：  
 
